@@ -67,19 +67,38 @@ export class FogManager {
    * @param dayProgress  A normalised value in [0, 1] representing the time of day.
    *                     0.0 = midnight, 0.25 = dawn, 0.5 = noon, 0.75 = dusk.
    */
-  update(_camera: THREE.Camera, dayProgress: number): void {
+  /**
+   * @param _camera       The active camera.
+   * @param dayProgress   Normalised time of day [0,1].
+   * @param weatherDarken Optional darkening factor from weather (0 = clear, ~0.35 = full rain).
+   */
+  update(_camera: THREE.Camera, dayProgress: number, weatherDarken = 0): void {
     // Compute sky colour for the current time of day
     const skyColor = this.computeSkyColor(dayProgress);
+
+    // Darken sky during weather
+    if (weatherDarken > 0) {
+      skyColor.multiplyScalar(1 - weatherDarken);
+    }
+
     this.fogColor.copy(skyColor);
 
-    // Compute sunlight intensity
-    const sunlight = this.computeSunlight(dayProgress);
+    // Compute sunlight intensity (dim during weather)
+    let sunlight = this.computeSunlight(dayProgress);
+    if (weatherDarken > 0) {
+      sunlight *= (1 - weatherDarken * 0.5);
+    }
+
+    // Pull fog closer during weather for reduced visibility
+    const weatherFogScale = 1 - weatherDarken * 0.3;
+    const effectiveNear = this.fogNear * weatherFogScale;
+    const effectiveFar = this.fogFar * weatherFogScale;
 
     // Update material uniforms
     for (const mat of this.materials) {
       mat.uniforms.fogColor.value.copy(this.fogColor);
-      mat.uniforms.fogNear.value = this.fogNear;
-      mat.uniforms.fogFar.value = this.fogFar;
+      mat.uniforms.fogNear.value = effectiveNear;
+      mat.uniforms.fogFar.value = effectiveFar;
       mat.uniforms.sunlightIntensity.value = sunlight;
     }
 

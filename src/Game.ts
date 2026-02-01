@@ -17,6 +17,7 @@ import { SkyRenderer } from './rendering/SkyRenderer';
 import { BlockBreakEffect } from './rendering/BlockBreakEffect';
 import { WaterRenderer } from './rendering/WaterRenderer';
 import { PerformanceManager } from './rendering/PerformanceManager';
+import { WeatherSystem } from './rendering/WeatherSystem';
 import { UIManager } from './ui/UIManager';
 import { HUD } from './ui/HUD';
 import { HotbarUI } from './ui/HotbarUI';
@@ -59,6 +60,7 @@ export class Game {
   private blockBreakEffect!: BlockBreakEffect;
   private waterRenderer!: WaterRenderer;
   private performanceManager!: PerformanceManager;
+  private weatherSystem!: WeatherSystem;
   private uiManager!: UIManager;
   private hud!: HUD;
   private hotbarUI!: HotbarUI;
@@ -219,6 +221,8 @@ export class Game {
     this.blockBreakEffect = new BlockBreakEffect();
     this.waterRenderer = new WaterRenderer();
     this.performanceManager = new PerformanceManager();
+    this.weatherSystem = new WeatherSystem();
+    this.weatherSystem.init(this.engine.scene, this.biomeMap);
 
     // Register chunk materials with the fog manager so it keeps their
     // uniforms synchronised.
@@ -480,7 +484,26 @@ export class Game {
       // Day/night
       this.dayNightCycle.update(dt);
       this.skyRenderer.update(this.dayNightCycle, this.engine.camera);
-      this.fogManager.update(this.engine.camera, this.dayNightCycle.getTimeOfDay());
+
+      // Weather
+      this.weatherSystem.update(
+        dt,
+        this.player.position.x,
+        this.player.position.y,
+        this.player.position.z,
+      );
+      const weatherDarken = this.weatherSystem.getSkyDarkening();
+      this.fogManager.update(this.engine.camera, this.dayNightCycle.getTimeOfDay(), weatherDarken);
+
+      // Rain ambient sound
+      if (this.weatherSystem.isRaining() || this.weatherSystem.isSnowing()) {
+        soundManager.startRainAmbient();
+        soundManager.updateRainVolume(this.weatherSystem.getIntensity());
+      } else if (this.weatherSystem.getIntensity() <= 0) {
+        soundManager.stopRainAmbient();
+      } else {
+        soundManager.updateRainVolume(this.weatherSystem.getIntensity());
+      }
 
       // Effects
       this.blockBreakEffect.update(dt);

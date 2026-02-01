@@ -16,6 +16,11 @@ export class SoundManager {
   // -- Footstep tracking --
   private stepAccumulator = 0;
 
+  // -- Rain ambient --
+  private rainSource: AudioBufferSourceNode | null = null;
+  private rainGain: GainNode | null = null;
+  private rainPlaying = false;
+
   // -----------------------------------------------------------------------
   // Lifecycle
   // -----------------------------------------------------------------------
@@ -217,6 +222,55 @@ export class SoundManager {
     gain.connect(this.masterGain);
     source.start(now);
     source.stop(now + 0.1);
+  }
+
+  // -----------------------------------------------------------------------
+  // Ambient rain sound
+  // -----------------------------------------------------------------------
+
+  /**
+   * Start a continuous looping rain ambient sound.
+   * Volume is controlled by the intensity parameter (0-1).
+   */
+  startRainAmbient(): void {
+    if (this.rainPlaying) return;
+    const ctx = this.ensureContext();
+    if (!ctx || !this.masterGain || !this.noiseBuffer) return;
+
+    this.rainGain = ctx.createGain();
+    this.rainGain.gain.value = 0;
+    this.rainGain.connect(this.masterGain);
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 600;
+    filter.Q.value = 0.5;
+
+    this.rainSource = ctx.createBufferSource();
+    this.rainSource.buffer = this.noiseBuffer;
+    this.rainSource.loop = true;
+    this.rainSource.connect(filter);
+    filter.connect(this.rainGain);
+    this.rainSource.start();
+    this.rainPlaying = true;
+  }
+
+  /** Update the rain ambient volume based on weather intensity (0-1). */
+  updateRainVolume(intensity: number): void {
+    if (this.rainGain) {
+      this.rainGain.gain.value = intensity * 0.12;
+    }
+  }
+
+  /** Stop the rain ambient sound. */
+  stopRainAmbient(): void {
+    if (!this.rainPlaying) return;
+    try {
+      this.rainSource?.stop();
+    } catch { /* ignore */ }
+    this.rainSource = null;
+    this.rainGain = null;
+    this.rainPlaying = false;
   }
 
   // -----------------------------------------------------------------------
