@@ -11,7 +11,7 @@ A single-player, browser-based Minecraft clone built with **Three.js + TypeScrip
 npm install
 npm run dev
 ```
-Open `http://localhost:5173/mycraft/` in your browser. Click the canvas to lock the pointer and start playing.
+Open `http://localhost:5173/` in your browser. Click the canvas to lock the pointer and start playing.
 
 ## Controls
 
@@ -109,7 +109,7 @@ npm install        # Install dependencies (first time only)
 npm run dev        # Start Vite dev server with HMR
 ```
 
-Open `http://localhost:5173/Xcraft/` in your browser. Click the canvas to lock the pointer and begin playing.
+Open `http://localhost:5173/` in your browser. Click the canvas to lock the pointer and begin playing.
 
 ### Troubleshooting
 
