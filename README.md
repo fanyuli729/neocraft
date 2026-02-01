@@ -31,7 +31,7 @@ Open `http://localhost:5173/` in your browser. Click the canvas to lock the poin
 
 ## Features
 
-- **Procedural terrain** with biomes (plains, forest, desert, taiga, mountains, ocean, beach, tundra), caves, ore veins, and trees
+- **Procedural terrain** with biomes (plains, forest, desert, taiga, mountains, ocean, beach, tundra), caves, ore veins, trees, and structures (desert wells, cabins, dungeons)
 - **Per-block lighting** -- sunlight column propagation, BFS flood-fill for sunlight spread and torch light, Minecraft-style face shading
 - **Greedy meshing** with ambient occlusion for efficient chunk rendering
 - **Web Worker** off-thread chunk meshing via a worker pool
@@ -168,6 +168,7 @@ Deployment to GitHub Pages is automatic via `.github/workflows/deploy.yml` on pu
 - [x] Furnace smelting -- smelt ores into ingots via furnace UI with fuel, progress bar, and cooked food
 - [x] Right-click functional blocks -- crafting table and furnace open their UIs on right-click
 - [x] Per-block lighting engine -- sunlight propagation, torch BFS flood-fill, Minecraft-style face shading
+- [x] Structure generation -- desert wells, wooden cabins with furnishing, underground cobblestone dungeons
 
 ### Mid-term
 
@@ -175,7 +176,7 @@ Deployment to GitHub Pages is automatic via `.github/workflows/deploy.yml` on pu
 - [ ] **Water physics** -- flowing water that spreads from source blocks
 - [ ] **Redstone basics** -- levers, buttons, pressure plates, doors
 - [ ] **More biomes** -- jungle, swamp, mushroom island, mesa
-- [ ] **Structure generation** -- villages, dungeons, mineshafts
+- [ ] **Structure generation** -- villages, mineshafts (basic desert wells, cabins, and dungeons done)
 - [ ] **Multiplayer** -- WebSocket or WebRTC peer-to-peer for LAN-style co-op
 
 ### Long-term
