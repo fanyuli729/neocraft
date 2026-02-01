@@ -31,7 +31,7 @@ Open `http://localhost:5173/` in your browser. Click the canvas to lock the poin
 
 ## Features
 
-- **Procedural terrain** with biomes (plains, forest, desert, taiga, mountains, ocean, beach, tundra, jungle, swamp), caves, ore veins, trees, and structures (desert wells, cabins, dungeons)
+- **Procedural terrain** with biomes (plains, forest, desert, taiga, mountains, ocean, beach, tundra, jungle, swamp), caves, ore veins, trees, mineshafts, and structures (desert wells, cabins, dungeons)
 - **Per-block lighting** -- sunlight column propagation, BFS flood-fill for sunlight spread and torch light, Minecraft-style face shading
 - **Greedy meshing** with ambient occlusion for efficient chunk rendering
 - **Web Worker** off-thread chunk meshing via a worker pool
@@ -174,6 +174,7 @@ Deployment to GitHub Pages is automatic via `.github/workflows/deploy.yml` on pu
 - [x] Jungle & swamp biomes -- tall jungle trees, jungle wood/leaves blocks, swamp vegetation, Whittaker-diagram classification
 - [x] Swimming & drowning -- water drag, buoyancy, air bubble HUD, drowning damage, fall damage cancellation in water
 - [x] Dynamic weather system -- rain/snow particles, biome-aware precipitation, sky darkening, fog reduction, ambient rain sound
+- [x] Mineshaft generation -- underground tunnel networks with oak support beams, plank walkways, torches, branching corridors
 
 ### Mid-term
 
@@ -181,7 +182,7 @@ Deployment to GitHub Pages is automatic via `.github/workflows/deploy.yml` on pu
 - [ ] **Water physics** -- flowing water that spreads from source blocks
 - [ ] **Redstone basics** -- levers, buttons, pressure plates, doors
 - [ ] **More biomes** -- mushroom island, mesa, savanna
-- [ ] **Structure generation** -- villages, mineshafts (basic desert wells, cabins, and dungeons done)
+- [ ] **Structure generation** -- villages, temples (mineshafts, desert wells, cabins, dungeons done)
 - [ ] **Multiplayer** -- WebSocket or WebRTC peer-to-peer for LAN-style co-op
 
 ### Long-term

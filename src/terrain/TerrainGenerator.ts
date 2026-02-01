@@ -8,6 +8,7 @@ import { CaveGenerator } from '@/terrain/CaveGenerator';
 import { OreGenerator } from '@/terrain/OreGenerator';
 import { TreeGenerator, TreeType } from '@/terrain/TreeGenerator';
 import { StructureGenerator } from '@/terrain/StructureGenerator';
+import { MineshaftGenerator } from '@/terrain/MineshaftGenerator';
 
 // ---------------------------------------------------------------------------
 // Seeded PRNG (mulberry32)
@@ -72,6 +73,7 @@ export class TerrainGenerator {
   private oreGenerator: OreGenerator;
   private treeGenerator: TreeGenerator;
   private structureGenerator: StructureGenerator;
+  private mineshaftGenerator: MineshaftGenerator;
 
   // Multi-octave noise layers for the base heightmap
   private noiseOctaves: NoiseFunction2D[];
@@ -91,6 +93,7 @@ export class TerrainGenerator {
     this.oreGenerator = new OreGenerator(seed);
     this.treeGenerator = new TreeGenerator();
     this.structureGenerator = new StructureGenerator(seed);
+    this.mineshaftGenerator = new MineshaftGenerator(seed);
 
     // --- Heightmap noise octaves ---
     this.noiseOctaves = [];
@@ -130,10 +133,13 @@ export class TerrainGenerator {
     // 3. Scatter ores
     this.oreGenerator.generate(chunk, worldX, worldZ);
 
-    // 4. Place trees
+    // 4. Generate mineshafts
+    this.mineshaftGenerator.generate(chunk, worldX, worldZ);
+
+    // 5. Place trees
     this.placeTrees(chunk, heightmap, worldX, worldZ);
 
-    // 5. Surface decorations (flowers, grass, cacti)
+    // 6. Surface decorations (flowers, grass, cacti)
     this.structureGenerator.generate(chunk, heightmap, this.biomeMap, worldX, worldZ);
   }
 
