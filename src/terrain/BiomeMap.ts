@@ -13,6 +13,8 @@ export enum Biome {
   OCEAN,
   BEACH,
   TUNDRA,
+  JUNGLE,
+  SWAMP,
 }
 
 // ---------------------------------------------------------------------------
@@ -127,6 +129,9 @@ export class BiomeMap {
 
     // ------- Warm band --------
     if (temp < 0.7) {
+      if (moist > 0.68) {
+        return Biome.SWAMP;
+      }
       if (moist > 0.55) {
         return Biome.FOREST;
       }
@@ -138,7 +143,7 @@ export class BiomeMap {
 
     // ------- Hot band --------
     if (moist > 0.55) {
-      return Biome.FOREST;
+      return Biome.JUNGLE;
     }
     if (moist > 0.35) {
       return Biome.PLAINS;

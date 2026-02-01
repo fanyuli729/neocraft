@@ -241,3 +241,14 @@ BlockRegistry.register(
   BlockType.CACTUS, 'Cactus', true, true, 0.4, 'none',
   { top: 'cactus_top', bottom: 'cactus_bottom', side: 'cactus_side' },
 );
+
+// --- Wood (Jungle) ---
+BlockRegistry.register(
+  BlockType.WOOD_JUNGLE, 'Jungle Wood', false, true, 2.0, 'axe',
+  { top: 'jungle_log_top', bottom: 'jungle_log_top', side: 'jungle_log_side' },
+);
+
+BlockRegistry.register(
+  BlockType.LEAVES_JUNGLE, 'Jungle Leaves', true, true, 0.2, 'shears',
+  { all: 'jungle_leaves' },
+);

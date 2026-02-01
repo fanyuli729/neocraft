@@ -71,8 +71,11 @@ registerTexture('cactus_bottom');   // 37
 registerTexture('flower_red');      // 38
 registerTexture('flower_yellow');   // 39
 registerTexture('tall_grass');      // 40
-registerTexture('air');             // 41
-registerTexture('missing');         // 42
+registerTexture('jungle_log_side');  // 41
+registerTexture('jungle_log_top');  // 42
+registerTexture('jungle_leaves');   // 43
+registerTexture('air');             // 44
+registerTexture('missing');         // 45
 
 /**
  * Return the flat index of a named texture inside the atlas.
@@ -316,6 +319,50 @@ painters.set('spruce_leaves', (ctx, ox, oy, rand) => {
         setPixel(ctx, ox, oy, px, py, [0, 0, 0, 0]);
       } else {
         setPixel(ctx, ox, oy, px, py, varyColor(hexToRGBA('#1a5c1a'), rand, 18));
+      }
+    }
+  }
+});
+
+// Jungle log side -- greenish-brown bark with vertical lines
+painters.set('jungle_log_side', (ctx, ox, oy, rand) => {
+  const base = hexToRGBA('#5a4a2a');
+  for (let py = 0; py < TEXTURE_SIZE; py++) {
+    for (let px = 0; px < TEXTURE_SIZE; px++) {
+      const isLine = px % 3 === 0;
+      const c: RGBA = isLine
+        ? varyColor([base[0] - 15, base[1] + 5, base[2] - 8, 1], rand, 8)
+        : varyColor(base, rand, 14);
+      setPixel(ctx, ox, oy, px, py, c);
+    }
+  }
+});
+
+// Jungle log top -- warm-toned concentric rings
+painters.set('jungle_log_top', (ctx, ox, oy, rand) => {
+  const center = TEXTURE_SIZE / 2;
+  for (let py = 0; py < TEXTURE_SIZE; py++) {
+    for (let px = 0; px < TEXTURE_SIZE; px++) {
+      const dist = Math.sqrt((px - center) ** 2 + (py - center) ** 2);
+      const ring = Math.floor(dist) % 3;
+      const base: RGBA = ring === 0
+        ? [0x7a, 0x6a, 0x3a, 1]
+        : ring === 1
+          ? [0x5a, 0x4a, 0x28, 1]
+          : [0x6a, 0x5a, 0x30, 1];
+      setPixel(ctx, ox, oy, px, py, varyColor(base, rand, 8));
+    }
+  }
+});
+
+// Jungle leaves -- vibrant bright green, denser than oak
+painters.set('jungle_leaves', (ctx, ox, oy, rand) => {
+  for (let py = 0; py < TEXTURE_SIZE; py++) {
+    for (let px = 0; px < TEXTURE_SIZE; px++) {
+      if (rand() < 0.1) {
+        setPixel(ctx, ox, oy, px, py, [0, 0, 0, 0]);
+      } else {
+        setPixel(ctx, ox, oy, px, py, varyColor(hexToRGBA('#2d9a1e'), rand, 22));
       }
     }
   }

@@ -35,6 +35,8 @@ export enum BlockType {
   SNOW,
   ICE,
   SAND_STONE,
+  WOOD_JUNGLE,
+  LEAVES_JUNGLE,
 
   /** Convenience sentinel -- total number of block types. */
   COUNT,

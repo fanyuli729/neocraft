@@ -10,6 +10,7 @@ export enum TreeType {
   OAK,
   BIRCH,
   SPRUCE,
+  JUNGLE,
 }
 
 // ---------------------------------------------------------------------------
@@ -59,6 +60,9 @@ export class TreeGenerator {
         break;
       case TreeType.SPRUCE:
         this.placeSpruceTree(chunk, localX, y, localZ, rng);
+        break;
+      case TreeType.JUNGLE:
+        this.placeJungleTree(chunk, localX, y, localZ, rng);
         break;
     }
   }
@@ -158,6 +162,30 @@ export class TreeGenerator {
 
     // Top cap: single leaf block above the topmost trunk block
     this.setIfInBounds(chunk, lx, leafTopY + 1, lz, BlockType.LEAVES_SPRUCE);
+  }
+
+  // -----------------------------------------------------------------------
+  // Jungle tree – 8-14 block trunk, large spherical canopy
+  // -----------------------------------------------------------------------
+
+  private placeJungleTree(
+    chunk: Chunk,
+    lx: number,
+    y: number,
+    lz: number,
+    rng: () => number,
+  ): void {
+    const trunkHeight = 8 + Math.floor(rng() * 7); // 8-14
+    const leafRadius = 3;
+
+    // Trunk
+    for (let dy = 0; dy < trunkHeight; dy++) {
+      this.setIfInBounds(chunk, lx, y + dy, lz, BlockType.WOOD_JUNGLE);
+    }
+
+    // Large leaf sphere centred near the top of the trunk
+    const leafCenterY = y + trunkHeight - 1;
+    this.placeLeafSphere(chunk, lx, leafCenterY, lz, leafRadius, BlockType.LEAVES_JUNGLE);
   }
 
   // -----------------------------------------------------------------------

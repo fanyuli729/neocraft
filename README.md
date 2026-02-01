@@ -31,7 +31,7 @@ Open `http://localhost:5173/` in your browser. Click the canvas to lock the poin
 
 ## Features
 
-- **Procedural terrain** with biomes (plains, forest, desert, taiga, mountains, ocean, beach, tundra), caves, ore veins, trees, and structures (desert wells, cabins, dungeons)
+- **Procedural terrain** with biomes (plains, forest, desert, taiga, mountains, ocean, beach, tundra, jungle, swamp), caves, ore veins, trees, and structures (desert wells, cabins, dungeons)
 - **Per-block lighting** -- sunlight column propagation, BFS flood-fill for sunlight spread and torch light, Minecraft-style face shading
 - **Greedy meshing** with ambient occlusion for efficient chunk rendering
 - **Web Worker** off-thread chunk meshing via a worker pool
@@ -144,7 +144,7 @@ Deployment to GitHub Pages is automatic via `.github/workflows/deploy.yml` on pu
 
 ### Completed
 
-- [x] Procedural terrain with 8 biomes, caves, ores, trees
+- [x] Procedural terrain with 10 biomes, caves, ores, trees
 - [x] Greedy meshing with ambient occlusion
 - [x] First-person controller with AABB physics, gravity, fall damage
 - [x] Block break / place via DDA raycast
@@ -169,13 +169,14 @@ Deployment to GitHub Pages is automatic via `.github/workflows/deploy.yml` on pu
 - [x] Right-click functional blocks -- crafting table and furnace open their UIs on right-click
 - [x] Per-block lighting engine -- sunlight propagation, torch BFS flood-fill, Minecraft-style face shading
 - [x] Structure generation -- desert wells, wooden cabins with furnishing, underground cobblestone dungeons
+- [x] Jungle & swamp biomes -- tall jungle trees, jungle wood/leaves blocks, swamp vegetation, Whittaker-diagram classification
 
 ### Mid-term
 
 - [ ] **Infinite world** -- stream chunks in/out based on player position (currently pre-generated radius)
 - [ ] **Water physics** -- flowing water that spreads from source blocks
 - [ ] **Redstone basics** -- levers, buttons, pressure plates, doors
-- [ ] **More biomes** -- jungle, swamp, mushroom island, mesa
+- [ ] **More biomes** -- mushroom island, mesa, savanna
 - [ ] **Structure generation** -- villages, mineshafts (basic desert wells, cabins, and dungeons done)
 - [ ] **Multiplayer** -- WebSocket or WebRTC peer-to-peer for LAN-style co-op
 

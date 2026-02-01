@@ -36,6 +36,8 @@ export const ITEM_COLORS: Record<number, string> = {
   28: '#f0f0f0',   // SNOW
   29: '#a0d0f0',   // ICE
   30: '#d4c490',   // SAND_STONE
+  31: '#5a4a2a',   // WOOD_JUNGLE
+  32: '#2d9a1e',   // LEAVES_JUNGLE
   // Misc items
   200: '#8B6914',  // STICK
   201: '#1a1a1a',  // COAL

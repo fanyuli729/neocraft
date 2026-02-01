@@ -45,6 +45,8 @@ const BIOME_HEIGHT: Record<Biome, BiomeHeightConfig> = {
   [Biome.OCEAN]:     { minHeight: 30,  maxHeight: 58,  amplitude: 0.6  },
   [Biome.BEACH]:     { minHeight: 60,  maxHeight: 64,  amplitude: 0.15 },
   [Biome.TUNDRA]:    { minHeight: 62,  maxHeight: 70,  amplitude: 0.35 },
+  [Biome.JUNGLE]:    { minHeight: 60,  maxHeight: 76,  amplitude: 0.6  },
+  [Biome.SWAMP]:     { minHeight: 58,  maxHeight: 64,  amplitude: 0.2  },
 };
 
 // ---------------------------------------------------------------------------
@@ -283,6 +285,10 @@ export class TerrainGenerator {
         return BlockType.SAND;
       case Biome.TUNDRA:
         return BlockType.SNOW;
+      case Biome.JUNGLE:
+        return BlockType.GRASS;
+      case Biome.SWAMP:
+        return BlockType.GRASS;
       default:
         return BlockType.GRASS;
     }
@@ -301,6 +307,10 @@ export class TerrainGenerator {
       case Biome.MOUNTAINS:
         return BlockType.STONE;
       case Biome.TUNDRA:
+        return BlockType.DIRT;
+      case Biome.JUNGLE:
+        return BlockType.DIRT;
+      case Biome.SWAMP:
         return BlockType.DIRT;
       default:
         return BlockType.DIRT;
@@ -404,6 +414,16 @@ export class TerrainGenerator {
       case Biome.TUNDRA:
         // Very rare spruce
         if (roll < 0.005) return TreeType.SPRUCE;
+        return null;
+
+      case Biome.JUNGLE:
+        // Dense jungle: ~10 %
+        if (roll < 0.10) return TreeType.JUNGLE;
+        return null;
+
+      case Biome.SWAMP:
+        // Sparse short oaks: ~3 %
+        if (roll < 0.03) return TreeType.OAK;
         return null;
 
       default:

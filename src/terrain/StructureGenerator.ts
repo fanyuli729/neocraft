@@ -81,6 +81,12 @@ export class StructureGenerator {
           case Biome.TUNDRA:
             this.decorateTundra(chunk, lx, placeY, lz, rng);
             break;
+          case Biome.JUNGLE:
+            this.decorateJungle(chunk, lx, placeY, lz, rng);
+            break;
+          case Biome.SWAMP:
+            this.decorateSwamp(chunk, lx, placeY, lz, rng);
+            break;
           default:
             break;
         }
@@ -419,6 +425,38 @@ export class StructureGenerator {
   ): void {
     if (rng() < 0.15) {
       chunk.setBlock(lx, y, lz, BlockType.TALL_GRASS);
+    }
+  }
+
+  /** Jungle: dense tall grass (40 %) and flowers (10 %). */
+  private decorateJungle(
+    chunk: Chunk,
+    lx: number,
+    y: number,
+    lz: number,
+    rng: () => number,
+  ): void {
+    const roll = rng();
+    if (roll < 0.40) {
+      chunk.setBlock(lx, y, lz, BlockType.TALL_GRASS);
+    } else if (roll < 0.50) {
+      chunk.setBlock(lx, y, lz, rng() < 0.6 ? BlockType.FLOWER_RED : BlockType.FLOWER_YELLOW);
+    }
+  }
+
+  /** Swamp: tall grass (25 %) with sparse flowers (3 %). */
+  private decorateSwamp(
+    chunk: Chunk,
+    lx: number,
+    y: number,
+    lz: number,
+    rng: () => number,
+  ): void {
+    const roll = rng();
+    if (roll < 0.25) {
+      chunk.setBlock(lx, y, lz, BlockType.TALL_GRASS);
+    } else if (roll < 0.28) {
+      chunk.setBlock(lx, y, lz, BlockType.FLOWER_RED);
     }
   }
 

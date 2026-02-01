@@ -113,6 +113,8 @@ registerBlock(BlockType.CACTUS, 'Cactus');
 registerBlock(BlockType.SNOW, 'Snow');
 registerBlock(BlockType.ICE, 'Ice');
 registerBlock(BlockType.SAND_STONE, 'Sandstone');
+registerBlock(BlockType.WOOD_JUNGLE, 'Jungle Wood');
+registerBlock(BlockType.LEAVES_JUNGLE, 'Jungle Leaves');
 
 // ===========================================================================
 // Tool Items  (IDs 101 -- 120)
