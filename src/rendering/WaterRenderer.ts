@@ -109,7 +109,10 @@ export class WaterRenderer {
   update(dt: number, material: THREE.ShaderMaterial): void {
     this.time += dt;
 
-    const offset = material.uniforms['uUvOffset'].value as THREE.Vector2;
+    const uniform = material.uniforms['uUvOffset'];
+    if (!uniform) return;
+
+    const offset = uniform.value as THREE.Vector2;
     offset.x = (this.time * FLOW_SPEED) % 1.0;
     offset.y = (this.time * FLOW_SPEED * 0.5) % 1.0;
   }
